@@ -3,25 +3,43 @@
 
 import { Canvas } from '@react-three/fiber'
 import Experience from '../core/Experience'
-
+import { KeyboardControls } from '@react-three/drei'
+import TestStartUI from '@/app/dom/TestStartUI'
+import { useGameStore } from '@/app/hooks/useGameStore'
+import LoadingPage from '@/app/dom/LoadingPage'
+const Controls = {
+  forward :'forward',
+  back : 'back',
+  left : 'left',
+  right : 'right',
+  jump : 'jump',
+}
 export default function MainSceneClient() {
+  const currentScene = useGameStore((state) => state.currentScene)
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative', background: '#050510' }}>
-      
-      {/* 1. โลก 3D */}
-      <Canvas
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 200,
-          position: [12, 12, 12] // มุมกล้องมองเฉียงแบบ Trimetric ตอนเริ่ม
-        }}
-      >
+    currentScene === 'LOADING' ? <LoadingPage /> :(
+      <KeyboardControls map={[
+          { name: Controls.forward, keys: ['ArrowUp', 'KeyW'] },
+          { name: Controls.back, keys: ['ArrowDown', 'KeyS'] },
+          { name: Controls.left, keys: ['ArrowLeft', 'KeyA'] },
+          { name: Controls.right, keys: ['ArrowRight', 'KeyD'] },
+          { name: Controls.jump, keys: ['Space'] },
+      ]}>
+              <TestStartUI/>
+        <Canvas
+          camera={{
+            fov: 45,
+            near: 0.1,
+            far: 200,
+            position: [12, 12, 12] // มุมกล้องมองเฉียงแบบ Trimetric ตอนเริ่ม
+          }}
+        >
         <Experience />
-      </Canvas>
-      {/* 2. เมนู 2D ลอยทับข้างบน */}
-      {/* <MainMenu /> */}
+        </Canvas>
 
-    </div>
+
+      </KeyboardControls>
+    )
+    
   )
 }
