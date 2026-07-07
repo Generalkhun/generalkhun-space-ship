@@ -4,9 +4,9 @@
 import { Canvas } from '@react-three/fiber'
 import Experience from '../core/Experience'
 import { KeyboardControls } from '@react-three/drei'
-import TestStartUI from '@/app/dom/TestStartUI'
 import { useGameStore } from '@/app/hooks/useGameStore'
 import LoadingPage from '@/app/dom/LoadingPage'
+import TestGameState from '@/app/dom/TestStartUI'
 const Controls = {
   forward :'forward',
   back : 'back',
@@ -25,7 +25,7 @@ export default function MainSceneClient() {
           { name: Controls.right, keys: ['ArrowRight', 'KeyD'] },
           { name: Controls.jump, keys: ['Space'] },
       ]}>
-              <TestStartUI/>
+        <TestGameState/>
         <Canvas
           camera={{
             fov: 45,

@@ -5,8 +5,9 @@ import { useRef, useState } from "react"
 // import * as THREE from "three"
 const ImpulseStrength = 0.2
 const TorqueStrength = 0.3
-const Player = () => {
-    const body = useRef<any>(null)
+const Player = ({ playerRef }: { playerRef: React.RefObject<any> }) => {
+    console.log("🚀 ~ Player ~ playerRef:", playerRef)
+    const body = useRef<any>(playerRef)
     const [subKeys, getKeys] = useKeyboardControls()
     // const { rapier, world } = useRapier()
     // const [ smoothedCameraPosition, setSmoothedCameraPosition ] = useState(new THREE.Vector3(140,10,2))
@@ -92,7 +93,7 @@ const Player = () => {
         // state.camera.position.copy(smoothedCameraPosition)
         // state.camera.lookAt(smoothedCameraTarget)
     })
-    return <RigidBody linearDamping={ 0.5 } angularDamping={ 0.5 } ref={body} canSleep={ false } colliders="ball" restitution={ 0.2 } friction={ 1 } position={ [ 0, 1, 0 ] }>
+    return <RigidBody type="kinematicPosition" linearDamping={ 0.5 } angularDamping={ 0.5 } ref={body} canSleep={ false } colliders="ball" restitution={ 0.2 } friction={ 1 } position={ [ 0, 1, 5 ] }>
         <mesh castShadow>
             <icosahedronGeometry args={[0.3,1]}/>
             <meshStandardMaterial flatShading color={'mediumpurple'} />
