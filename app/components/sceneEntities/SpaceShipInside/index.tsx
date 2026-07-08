@@ -1,5 +1,47 @@
 import { RigidBody } from '@react-three/rapier'
 
+type RoomShellProps = {
+  position: [number, number, number]
+  size: [number, number, number]
+  wallThickness?: number
+  color: string
+}
+
+const RoomShell = ({ position, size, wallThickness = 0.25, color }: RoomShellProps) => {
+  const [width, height, depth] = size
+  const halfWidth = width / 2
+  const halfHeight = height / 2
+  const halfDepth = depth / 2
+
+  return (
+    <group position={position}>
+      <mesh position={[0, -halfHeight + wallThickness / 2, 0]} castShadow>
+        <boxGeometry args={[width, wallThickness, depth]} />
+        <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
+      </mesh>
+      <mesh position={[0, halfHeight - wallThickness / 2, 0]} castShadow>
+        <boxGeometry args={[width, wallThickness, depth]} />
+        <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
+      </mesh>
+      <mesh position={[0, 0, -halfDepth + wallThickness / 2]} castShadow>
+        <boxGeometry args={[width, height, wallThickness]} />
+        <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
+      </mesh>
+      <mesh position={[0, 0, halfDepth - wallThickness / 2]} castShadow>
+        <boxGeometry args={[width, height, wallThickness]} />
+        <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
+      </mesh>
+      <mesh position={[-halfWidth + wallThickness / 2, 0, 0]} castShadow>
+        <boxGeometry args={[wallThickness, height, depth]} />
+        <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
+      </mesh>
+      <mesh position={[halfWidth - wallThickness / 2, 0, 0]} castShadow>
+        <boxGeometry args={[wallThickness, height, depth]} />
+        <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
+      </mesh>
+    </group>
+  )
+}
 
 const SpaceShipInside = () => {
   return (
@@ -16,27 +58,11 @@ const SpaceShipInside = () => {
         <meshStandardMaterial color="#334b73" metalness={0.2} roughness={0.4} />
       </mesh>
 
-      <mesh position={[-4.2, 1.4, -2.5-10]} castShadow>
-        <boxGeometry args={[3.2, 2.8, 5.5]} />
-        <meshStandardMaterial color="#5b8fdc" />
-      </mesh>
+      <RoomShell position={[-4.2, 1.4, -12.5]} size={[3.2, 2.8, 5.5]} color="#5b8fdc" />
+      <RoomShell position={[-4.2, 1.4, -5.5]} size={[3.2, 2.8, 5.5]} color="#4a7bc0" />
+      <RoomShell position={[2.8, 1.4, -8.8]} size={[5.5, 2.8, 9.5]} color="#020b19" />
 
-      <mesh position={[-4.2, 1.4, 4.5-10]} castShadow>
-        <boxGeometry args={[3.2, 2.8, 5.5]} />
-        <meshStandardMaterial color="#4a7bc0" />
-      </mesh>
-
-      <mesh position={[2.8, 1.4, 1.2-10]} castShadow>
-        <boxGeometry args={[5.5, 2.8, 9.5]} />
-        <meshStandardMaterial color="#020b19" />
-      </mesh>
-
-      <mesh position={[0, 2.2, 9.2-10]} castShadow>
-        <boxGeometry args={[3, 2.6, 1.4]} />
-        <meshStandardMaterial color="#f2c94c" emissive="#665000" emissiveIntensity={0.2} />
-      </mesh>
-
-      <mesh position={[0, 0.1, -9.2-10]} castShadow>
+      <mesh position={[0, 0.1, -19.2]} castShadow>
         <boxGeometry args={[14, 0.8, 1.6]} />
         <meshStandardMaterial color="#101a2e" />
       </mesh>
