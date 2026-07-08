@@ -30,7 +30,7 @@ export default function Experience() {
   const roverRef = useRef<KinematicBodyHandle | null>(null)
   const playerRef = useRef<KinematicBodyHandle | null>(null)
   const cameraTarget = useRef(new THREE.Vector3())
-  const cameraOffset = useRef(new THREE.Vector3(2.2, 2.6, 5.2))
+  const cameraOffset = useRef(new THREE.Vector3(2, 8.5, 2.4))
 
   useFrame((state) => {
     if (currentScene !== 'INTRO') return
@@ -67,7 +67,7 @@ export default function Experience() {
     )
 
     camera.position.lerp(desiredPosition, 0.08)
-    cameraTarget.current.set(translation.x, translation.y + 1.2, translation.z + 1.4)
+    cameraTarget.current.set(translation.x, translation.y + 0.2, translation.z)
     camera.lookAt(cameraTarget.current)
   })
 
