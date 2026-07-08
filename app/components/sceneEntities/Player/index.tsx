@@ -1,14 +1,23 @@
-import { RigidBody, useRapier } from "@react-three/rapier"
+import { RigidBody } from "@react-three/rapier"
 import { useKeyboardControls } from "@react-three/drei"
 import { useFrame } from '@react-three/fiber'
-import { useRef, useState } from "react"
-// import * as THREE from "three"
+import { useRef, type RefObject } from "react"
+
+type KinematicBodyHandle = {
+    setNextKinematicTranslation: (value: { x: number; y: number; z: number }) => void
+    translation: () => { x: number; y: number; z: number }
+}
+
 const ImpulseStrength = 0.2
 const TorqueStrength = 0.3
-const Player = ({ playerRef }: { playerRef: React.RefObject<any> }) => {
-    console.log("🚀 ~ Player ~ playerRef:", playerRef)
-    const body = useRef<any>(playerRef)
-    const [subKeys, getKeys] = useKeyboardControls()
+const Player = ({ playerRef }: { playerRef: RefObject<KinematicBodyHandle | null> }) => {
+    const body = useRef<KinematicBodyHandle | null>(null)
+    const { forward, back, left, right } = useKeyboardControls((state) => ({
+        forward: state.forward,
+        back: state.back,
+        left: state.left,
+        right: state.right,
+    }))
     // const { rapier, world } = useRapier()
     // const [ smoothedCameraPosition, setSmoothedCameraPosition ] = useState(new THREE.Vector3(140,10,2))
     // const [ smoothedCameraTarget, setSmoothedCameraTarget ] = useState(new THREE.Vector3())
@@ -42,7 +51,6 @@ const Player = ({ playerRef }: { playerRef: React.RefObject<any> }) => {
     useFrame((state, delta) => {
 
         /**Ball */
-        const key = getKeys()
         const impulse = {
             x: 0.0,
             y: 0.0,
@@ -53,19 +61,19 @@ const Player = ({ playerRef }: { playerRef: React.RefObject<any> }) => {
             y: 0.0,
             z: 0.0,
         }
-        if(key.forward) {
+        if(forward) {
             impulse.x -= delta * ImpulseStrength
             torque.z += delta * TorqueStrength
         }
-        if(key.back) {
+        if(back) {
             impulse.x += delta * ImpulseStrength
             torque.z -= delta * TorqueStrength
         }
-        if(key.left) {
+        if(left) {
             impulse.z += delta * ImpulseStrength
             torque.x += delta * TorqueStrength
         }
-        if(key.right) {
+        if(right) {
             impulse.z -= delta * ImpulseStrength
             torque.x -= delta * TorqueStrength
         }
