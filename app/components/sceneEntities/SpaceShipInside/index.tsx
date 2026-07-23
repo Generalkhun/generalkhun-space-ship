@@ -63,7 +63,7 @@ const SpaceShipInside = () => {
       <RigidBody
         type="fixed"
         colliders="cuboid"
-        position={[0, 0, -6]}
+        position={[10, 0, -6]}
         rotation={[Math.PI / 12, 0, 0]}
       >
         <mesh>
@@ -94,7 +94,7 @@ const SpaceShipInside = () => {
       <RigidBody
         type="fixed"
         colliders="cuboid"
-        position={[-3, 3, -11]}
+        position={[7, 3, -11]}
         rotation={[0, Math.PI / 2, 0]}
       >
         <mesh>
@@ -109,7 +109,7 @@ const SpaceShipInside = () => {
       <RigidBody
         type="fixed"
         colliders="cuboid"
-        position={[-3, 3, -21]}
+        position={[7, 3, -21]}
         rotation={[0, Math.PI / 2, 0]}
       >
         <mesh>
@@ -122,9 +122,9 @@ const SpaceShipInside = () => {
         </mesh>
       </RigidBody>
       {/* Mechanical room - Science room */}
-      <RigidBody type="fixed" colliders="cuboid" position={[-8, 2.5, -24]}>
+      <RigidBody type="fixed" colliders="cuboid" position={[-4, 2.5, -24]}>
         <mesh>
-          <boxGeometry args={[12, 5, 0.4]} />
+          <boxGeometry args={[22, 5, 0.4]} />
           <meshStandardMaterial
             color="#334b73"
             metalness={0.2}
@@ -161,6 +161,14 @@ const SpaceShipInside = () => {
             metalness={0.2}
             roughness={0.4}
           />
+        </mesh>
+      </RigidBody>
+
+      {/* Elevator on the corner (square area on the floor to let the player stand on) */}
+      <RigidBody type="fixed" colliders="cuboid" position={[-14.8, 0.8, -39]}>
+        <mesh>
+          <boxGeometry args={[4, 0.01, 4]} />
+          <meshStandardMaterial color="red" metalness={0.2} roughness={0.4} />
         </mesh>
       </RigidBody>
 
