@@ -1,10 +1,10 @@
 import { useRapier, RigidBody, RapierRigidBody } from "@react-three/rapier";
 import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import * as THREE from "three";
 
-type KinematicBodyHandle = {
+export type PlayerBodyHandle = {
   setNextKinematicTranslation: (value: {
     x: number;
     y: number;
@@ -13,11 +13,15 @@ type KinematicBodyHandle = {
   translation: () => { x: number; y: number; z: number };
 };
 
+type PlayerProps = {
+  playerRef?: MutableRefObject<PlayerBodyHandle | null>;
+};
+
 const cameraOffsetValue = 10;
 
 const ImpulseStrength = 0.2;
 const TorqueStrength = 0.3;
-export default function Player() {
+export default function Player({ playerRef }: PlayerProps) {
   const body = useRef<RapierRigidBody | null>(null);
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
@@ -81,6 +85,35 @@ export default function Player() {
   //         unsubscribeAny()
   //     }
   // }, [])
+
+  useEffect(() => {
+    if (!playerRef) return;
+
+    const handle: PlayerBodyHandle = {
+      setNextKinematicTranslation: (value) => {
+        if (!body.current) return;
+
+        body.current.setTranslation(
+          { x: value.x, y: value.y, z: value.z },
+          true,
+        );
+        body.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+        body.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      },
+      translation: () => {
+        if (!body.current) return { x: 0, y: 0, z: 0 };
+        return body.current.translation();
+      },
+    };
+
+    playerRef.current = handle;
+
+    return () => {
+      if (playerRef.current === handle) {
+        playerRef.current = null;
+      }
+    };
+  }, [playerRef]);
 
   useFrame((state, delta) => {
     /**
