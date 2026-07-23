@@ -160,7 +160,7 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
         </mesh>
       </RigidBody>
 
-      {/* bedroom wall */}
+      {/* bedroom wall - ship */}
       <RigidBody type="fixed" colliders="cuboid" position={[-12.5, 2.5, -39]}>
         <mesh>
           <boxGeometry args={[5, 5, 0.4]} />
@@ -174,6 +174,17 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
       <RigidBody type="fixed" colliders="cuboid" position={[5, 2.5, -39]}>
         <mesh>
           <boxGeometry args={[20, 5, 0.4]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      {/* Bedroom floor */}
+      <RigidBody type="fixed" colliders="cuboid" position={[-10.5, 0.5, -44]}>
+        <mesh>
+          <boxGeometry args={[15, 0.4, 10]} />
           <meshStandardMaterial
             color="#334b73"
             metalness={0.2}
