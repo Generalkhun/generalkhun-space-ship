@@ -13,6 +13,8 @@ type KinematicBodyHandle = {
   translation: () => { x: number; y: number; z: number };
 };
 
+const cameraOffsetValue = 10;
+
 const ImpulseStrength = 0.2;
 const TorqueStrength = 0.3;
 export default function Player() {
@@ -122,6 +124,12 @@ export default function Player() {
 
       const cameraPosition = new THREE.Vector3();
       cameraPosition.copy(bodyPosition);
+      const cameraOffset = new THREE.Vector3(
+        cameraOffsetValue,
+        cameraOffsetValue,
+        cameraOffsetValue,
+      );
+      cameraPosition.add(cameraOffset);
       cameraPosition.z += 2.25;
       cameraPosition.y += 0.65;
 

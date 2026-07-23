@@ -1,17 +1,22 @@
-import { RigidBody } from '@react-three/rapier'
+import { RigidBody } from "@react-three/rapier";
 
 type RoomShellProps = {
-  position: [number, number, number]
-  size: [number, number, number]
-  wallThickness?: number
-  color: string
-}
+  position: [number, number, number];
+  size: [number, number, number];
+  wallThickness?: number;
+  color: string;
+};
 
-const RoomShell = ({ position, size, wallThickness = 0.25, color }: RoomShellProps) => {
-  const [width, height, depth] = size
-  const halfWidth = width / 2
-  const halfHeight = height / 2
-  const halfDepth = depth / 2
+const RoomShell = ({
+  position,
+  size,
+  wallThickness = 0.25,
+  color,
+}: RoomShellProps) => {
+  const [width, height, depth] = size;
+  const halfWidth = width / 2;
+  const halfHeight = height / 2;
+  const halfDepth = depth / 2;
 
   return (
     <group position={position}>
@@ -40,8 +45,8 @@ const RoomShell = ({ position, size, wallThickness = 0.25, color }: RoomShellPro
         <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
       </mesh>
     </group>
-  )
-}
+  );
+};
 
 const SpaceShipInside = () => {
   return (
@@ -54,6 +59,111 @@ const SpaceShipInside = () => {
       </RigidBody> */}
 
       {/* floor */}
+      {/* Slope floor to create a ramp */}
+      <RigidBody
+        type="fixed"
+        colliders="cuboid"
+        position={[0, 0, -6]}
+        rotation={[Math.PI / 12, 0, 0]}
+      >
+        <mesh>
+          <boxGeometry args={[4, 0.4, 6]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      {/* Spaceship interior */}
+      {/* Floor */}
+      <RigidBody type="fixed" colliders="cuboid" position={[0, 0, -24]}>
+        <mesh>
+          <boxGeometry args={[30, 1.4, 30]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+
+      {/* Ship Walls */}
+      {/* room walls */}
+      {/* Mechanical room - central path */}
+      <RigidBody
+        type="fixed"
+        colliders="cuboid"
+        position={[-3, 3, -11]}
+        rotation={[0, Math.PI / 2, 0]}
+      >
+        <mesh>
+          <boxGeometry args={[4, 5, 0.4]} />
+          <meshStandardMaterial
+            color="#242e5c"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      <RigidBody
+        type="fixed"
+        colliders="cuboid"
+        position={[-3, 3, -21]}
+        rotation={[0, Math.PI / 2, 0]}
+      >
+        <mesh>
+          <boxGeometry args={[6, 5, 0.4]} />
+          <meshStandardMaterial
+            color="#242e5c"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      {/* Mechanical room - Science room */}
+      <RigidBody type="fixed" colliders="cuboid" position={[-8, 2.5, -24]}>
+        <mesh>
+          <boxGeometry args={[12, 5, 0.4]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+
+      <RigidBody type="fixed" colliders="cuboid" position={[-14.8, 2.5, -24]}>
+        <mesh>
+          <boxGeometry args={[0.4, 5, 30]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="cuboid" position={[14.8, 2.5, -24]}>
+        <mesh>
+          <boxGeometry args={[0.4, 5, 30]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="cuboid" position={[0, 2.5, -39]}>
+        <mesh>
+          <boxGeometry args={[30, 5, 0.4]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+
       {/* <mesh position={[0, 0, -10]}>
         <boxGeometry args={[14, 0.4, 20]} />
         <meshStandardMaterial color="#334b73" metalness={0.2} roughness={0.4} />
@@ -68,7 +178,7 @@ const SpaceShipInside = () => {
         <meshStandardMaterial color="#101a2e" />
       </mesh> */}
     </group>
-  )
-}
+  );
+};
 
-export default SpaceShipInside
+export default SpaceShipInside;
