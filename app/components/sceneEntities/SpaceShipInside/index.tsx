@@ -160,7 +160,7 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
         </mesh>
       </RigidBody>
 
-      {/* bedroom wall - ship */}
+      {/* mystery wall - ship */}
       <RigidBody type="fixed" colliders="cuboid" position={[-12.5, 2.5, -39]}>
         <mesh>
           <boxGeometry args={[5, 5, 0.4]} />
@@ -181,7 +181,7 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
           />
         </mesh>
       </RigidBody>
-      {/* Bedroom floor */}
+      {/* mystery floor */}
       <RigidBody type="fixed" colliders="cuboid" position={[-10.5, 0.5, -44]}>
         <mesh>
           <boxGeometry args={[15, 0.4, 10]} />
@@ -226,6 +226,51 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
           />
         </mesh>
       </RigidBody>
+      {/* second floor bedroom */}
+      {/* bedroom slope */}
+      <RigidBody
+        type="fixed"
+        colliders="cuboid"
+        position={[-17, 4, -24]}
+        rotation={[Math.PI / 6, 0, 0]}
+      >
+        <mesh>
+          <boxGeometry args={[2, 0.2, 4]} />
+          <meshStandardMaterial
+            color="#e0e0e0"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      {/* bedroom floor */}
+      <RigidBody type="fixed" colliders="cuboid" position={[-20, 3, -21]}>
+        <mesh>
+          <boxGeometry args={[8, 1.4, 8]} />
+          <meshStandardMaterial color="teal" metalness={0.2} roughness={0.4} />
+        </mesh>
+      </RigidBody>
+      {/* bedroom walls */}
+      {/* <RigidBody type="fixed" colliders="cuboid" position={[-35, 6.9, -10]}>
+        <mesh>
+          <boxGeometry args={[0.4, 5, 10]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="cuboid" position={[-15, 6.9, -10]}>
+        <mesh>
+          <boxGeometry args={[0.4, 5, 10]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody> */}
     </group>
   );
 };
