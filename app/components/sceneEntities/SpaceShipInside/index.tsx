@@ -3,54 +3,6 @@ import { useFrame } from "@react-three/fiber";
 import { RefObject, useRef } from "react";
 import { type PlayerBodyHandle } from "../Player";
 
-// type RoomShellProps = {
-//   position: [number, number, number];
-//   size: [number, number, number];
-//   wallThickness?: number;
-//   color: string;
-// };
-
-// const RoomShell = ({
-//   position,
-//   size,
-//   wallThickness = 0.25,
-//   color,
-// }: RoomShellProps) => {
-//   const [width, height, depth] = size;
-//   const halfWidth = width / 2;
-//   const halfHeight = height / 2;
-//   const halfDepth = depth / 2;
-
-//   return (
-//     <group position={position}>
-//       <mesh position={[0, -halfHeight + wallThickness / 2, 0]} castShadow>
-//         <boxGeometry args={[width, wallThickness, depth]} />
-//         <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
-//       </mesh>
-//       <mesh position={[0, halfHeight - wallThickness / 2, 0]} castShadow>
-//         <boxGeometry args={[width, wallThickness, depth]} />
-//         <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
-//       </mesh>
-//       <mesh position={[0, 0, -halfDepth + wallThickness / 2]} castShadow>
-//         <boxGeometry args={[width, height, wallThickness]} />
-//         <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
-//       </mesh>
-//       <mesh position={[0, 0, halfDepth - wallThickness / 2]} castShadow>
-//         <boxGeometry args={[width, height, wallThickness]} />
-//         <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
-//       </mesh>
-//       <mesh position={[-halfWidth + wallThickness / 2, 0, 0]} castShadow>
-//         <boxGeometry args={[wallThickness, height, depth]} />
-//         <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
-//       </mesh>
-//       <mesh position={[halfWidth - wallThickness / 2, 0, 0]} castShadow>
-//         <boxGeometry args={[wallThickness, height, depth]} />
-//         <meshStandardMaterial color={color} metalness={0.2} roughness={0.4} />
-//       </mesh>
-//     </group>
-//   );
-// };
-
 type SpaceShipInsideProps = {
   playerRef?: RefObject<PlayerBodyHandle | null>;
 };
@@ -186,7 +138,7 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
           />
         </mesh>
       </RigidBody>
-
+      {/* front wall */}
       <RigidBody type="fixed" colliders="cuboid" position={[-14.8, 2.5, -24]}>
         <mesh>
           <boxGeometry args={[0.4, 5, 30]} />
@@ -207,9 +159,21 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
           />
         </mesh>
       </RigidBody>
-      <RigidBody type="fixed" colliders="cuboid" position={[0, 2.5, -39]}>
+
+      {/* bedroom wall */}
+      <RigidBody type="fixed" colliders="cuboid" position={[-12.5, 2.5, -39]}>
         <mesh>
-          <boxGeometry args={[30, 5, 0.4]} />
+          <boxGeometry args={[5, 5, 0.4]} />
+          <meshStandardMaterial
+            color="#334b73"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="cuboid" position={[5, 2.5, -39]}>
+        <mesh>
+          <boxGeometry args={[20, 5, 0.4]} />
           <meshStandardMaterial
             color="#334b73"
             metalness={0.2}
@@ -218,7 +182,7 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
         </mesh>
       </RigidBody>
 
-      {/* Elevator on the corner (square area on the floor to let the player stand on) */}
+      {/* Elevator on the corner on 1st floor (square area on the floor to let the player stand on) */}
       <RigidBody
         ref={elevatorBodyRef}
         type="kinematicPosition"
@@ -228,6 +192,27 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
         <mesh>
           <boxGeometry args={[4, 0.01, 4]} />
           <meshStandardMaterial color="red" metalness={0.2} roughness={0.4} />
+        </mesh>
+      </RigidBody>
+      {/* Second floor (cockpit area) */}
+      <RigidBody type="fixed" colliders="cuboid" position={[-17.6, 4.4, -36]}>
+        <mesh>
+          <boxGeometry args={[5, 1.4, 5]} />
+          <meshStandardMaterial
+            color="#e0e0e0"
+            metalness={0.2}
+            roughness={0.4}
+          />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="cuboid" position={[-25, 4.4, -30]}>
+        <mesh>
+          <boxGeometry args={[20, 1.4, 10]} />
+          <meshStandardMaterial
+            color="#e0e0e0"
+            metalness={0.2}
+            roughness={0.4}
+          />
         </mesh>
       </RigidBody>
     </group>
