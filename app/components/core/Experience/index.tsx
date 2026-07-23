@@ -12,6 +12,7 @@ import SpaceShipIntro from '../../sceneEntities/SpaceShipIntro'
 import Rover from '../../sceneEntities/Rover'
 import PlayerIntroScene from '../../sceneEntities/PlayerIntroScene'
 import SpaceShipInside from '../../sceneEntities/SpaceShipInside'
+import Player from '../../sceneEntities/Player'
 
 type KinematicBodyHandle = {
   setNextKinematicTranslation: (value: { x: number; y: number; z: number }) => void
@@ -52,7 +53,7 @@ export default function Experience() {
       if (newZ < 1) {
         useGameStore.getState().setCurrentScene('INSHIP')
       }
-      playerRef.current.setNextKinematicTranslation({ x: 0, y: 1, z: newZ })
+      playerRef.current && playerRef.current.setNextKinematicTranslation({ x: 0, y: 1, z: newZ })
     }
   })
 
@@ -93,8 +94,9 @@ export default function Experience() {
             <meshStandardMaterial color="#222233" />
           </mesh>
         </RigidBody>
-        <PlayerIntroScene playerRef={playerRef} />
-        <Rover roverRef={roverRef} />
+        {/* {currentScene !== 'INSHIP' ? <PlayerIntroScene playerRef={playerRef} /> : <Player />} */}
+        <Player />
+        {/* <Rover roverRef={roverRef} /> */}
         <Html position={[0, 6, 0]} center>
           {currentScene === 'SHIPFRONT' && (
             <div className="bg-white p-4 rounded-lg text-black text-center">

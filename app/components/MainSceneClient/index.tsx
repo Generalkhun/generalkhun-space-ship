@@ -9,9 +9,9 @@ import LoadingPage from '@/app/dom/LoadingPage'
 import TestGameState from '@/app/dom/TestStartUI'
 const Controls = {
   forward :'forward',
-  back : 'back',
-  left : 'left',
-  right : 'right',
+  backward : 'backward',
+  leftward : 'leftward',
+  rightward : 'rightward',
   jump : 'jump',
 }
 export default function MainSceneClient() {
@@ -20,9 +20,9 @@ export default function MainSceneClient() {
     currentScene === 'LOADING' ? <LoadingPage /> :(
       <KeyboardControls map={[
           { name: Controls.forward, keys: ['ArrowUp', 'KeyW'] },
-          { name: Controls.back, keys: ['ArrowDown', 'KeyS'] },
-          { name: Controls.left, keys: ['ArrowLeft', 'KeyA'] },
-          { name: Controls.right, keys: ['ArrowRight', 'KeyD'] },
+          { name: Controls.backward, keys: ['ArrowDown', 'KeyS'] },
+          { name: Controls.leftward, keys: ['ArrowLeft', 'KeyA'] },
+          { name: Controls.rightward, keys: ['ArrowRight', 'KeyD'] },
           { name: Controls.jump, keys: ['Space'] },
       ]}>
         <TestGameState/>
