@@ -13,6 +13,7 @@ import Rover from "../../sceneEntities/Rover";
 import PlayerIntroScene from "../../sceneEntities/PlayerIntroScene";
 import SpaceShipInside from "../../sceneEntities/SpaceShipInside";
 import Player, { type PlayerBodyHandle } from "../../sceneEntities/Player";
+import AssistanceOrb from "../../sceneEntities/AssistanceOrb";
 
 type KinematicBodyHandle = {
   setNextKinematicTranslation: (value: {
@@ -25,6 +26,7 @@ type KinematicBodyHandle = {
 
 export default function Experience() {
   const currentScene = useGameStore((state) => state.currentScene);
+  const setInfoOpen = useGameStore((state) => state.setInfoOpen);
   const { camera } = useThree();
   /**
    * Introduction scene sequences:
@@ -114,6 +116,12 @@ export default function Experience() {
         </RigidBody>
         {/* {currentScene !== 'INSHIP' ? <PlayerIntroScene playerRef={playerRef} /> : <Player />} */}
         <Player playerRef={playerRef} />
+        {currentScene === "INSHIP" && (
+          <AssistanceOrb
+            playerRef={playerRef}
+            onInteract={() => setInfoOpen(true)}
+          />
+        )}
         {/* <Rover roverRef={roverRef} /> */}
         <Html position={[0, 6, 0]} center>
           {currentScene === "SHIPFRONT" && (

@@ -13,8 +13,6 @@ const elevatorTargetHeight = 5;
 
 const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
   const elevatorBodyRef = useRef<RapierRigidBody | null>(null);
-  const assistantRef = useRef<THREE.Group | null>(null);
-  const assistantIdlePosition = useRef(new THREE.Vector3(-10.5, 1.7, -30));
 
   useFrame((_, delta) => {
     if (!playerRef?.current || !elevatorBodyRef.current) return;
@@ -63,29 +61,6 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
       y: playerPosition.y + movementDelta,
       z: playerPosition.z,
     });
-  });
-
-  useFrame(() => {
-    if (!assistantRef.current || !playerRef?.current) return;
-
-    const playerPosition = playerRef.current.translation();
-    const hasEnteredShip = playerPosition.z <= -10;
-
-    if (!hasEnteredShip) {
-      const idlePosition = assistantIdlePosition.current;
-      assistantRef.current.position.lerp(idlePosition, 0.08);
-      assistantRef.current.rotation.y += 0.02;
-      return;
-    }
-
-    const targetPosition = new THREE.Vector3(
-      playerPosition.x,
-      playerPosition.y + 1.2,
-      playerPosition.z - 0.8,
-    );
-
-    assistantRef.current.position.lerp(targetPosition, 0.08);
-    assistantRef.current.rotation.y += 0.04;
   });
 
   return (
@@ -218,21 +193,6 @@ const SpaceShipInside = ({ playerRef }: SpaceShipInsideProps) => {
           />
         </mesh>
       </RigidBody>
-
-      <group ref={assistantRef} position={assistantIdlePosition.current}>
-        <mesh castShadow>
-          <sphereGeometry args={[0.2, 24, 24]} />
-          <meshStandardMaterial color="black" metalness={0.2} roughness={0.2} />
-        </mesh>
-        <mesh position={[0, 0.18, 0]} castShadow>
-          <sphereGeometry args={[0.08, 16, 16]} />
-          <meshStandardMaterial
-            color="#222222"
-            metalness={0.2}
-            roughness={0.3}
-          />
-        </mesh>
-      </group>
 
       {/* Elevator on the corner on 1st floor (square area on the floor to let the player stand on) */}
       <RigidBody
